@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+
+    mysql:
+        container_name: mysql.video-rental
+        image: mysql:5.7
+        command: --max_allowed_packet=512M
+        restart: always
+        volumes:
+            - ./docker/mysql/sql:/docker-entrypoint-initdb.d
+            - db:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: video-rental
+        networks:
+            - bubble
+        ports:
+            - '8309:3306'
+
+networks:
+    bubble:
+        external: true
+
+volumes:
+    db:
